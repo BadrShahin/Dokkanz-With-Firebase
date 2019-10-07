@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { throwError } from 'rxjs';
 import { AuthService } from './auth.service';
 import { map } from 'rxjs/internal/operators/map';
+import { UserData } from '../models/SpecificUserData';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ import { map } from 'rxjs/internal/operators/map';
 export class UserService {
   users: AngularFireList<User[]>;
   user: AngularFireObject<any>;
+  Favorites = [] as string[];
 
   // Error Data
   errorData: {};
@@ -23,8 +25,9 @@ export class UserService {
   ) {
     this.users = this.angularFireDatabase.list('/users') as AngularFireList<User[]>;
   }
-
   addUser(user: any) {
+    this.Favorites.push("");
+    user.Favorites = this.Favorites;
     this.users.push(user);
   }
 
@@ -39,6 +42,14 @@ export class UserService {
 
   getAllUsersData() {
     return this.users;
+  }
+
+  getSpecificUserData(user_login: string){
+    return this.httpClient.get(`${environment.baseUrl}users/${user_login}`);
+  }
+
+  getUserRepos(user_login: string) {
+    return this.httpClient.get(`${environment.baseUrl}users/${user_login}/repos`);
   }
 
   // Handel Error Method

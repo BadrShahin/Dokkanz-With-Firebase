@@ -1,0 +1,91 @@
+<div class="h-100" id="demopurpose" *ngIf="isUserProfile == true">
+    <div class="container h-100">
+        <div class="row justify-content-center align-items-center h-100">
+            <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+                <div class="profile-card py-3 card text-center">
+                    <i class="fa fa-star btn-favorite" id="btnFavorite" (click)="addToFavorites(user.login)" title="add to favorites"></i>
+                    <div class="card-body py-4" *ngIf="this.isDataLoaded">
+                        <img class="profile-picture rounded-circle" [src]="user.avatar_url" />
+                        <h2 class="text-dark h5 font-weight-bold mt-4 mb-1">
+                            {{user.name}}
+                        </h2>
+                        <p class="text-muted font-weight-bold small" *ngIf="user.bio != null">
+                            {{user.bio}}
+                            <i class="fa fa-registered"></i>
+                        </p>
+                        <p class="text-muted font-weight-bold small" *ngIf="user.location != null">
+                            <i class="fa fa-map-marker"></i>
+                            {{user.location}}
+                        </p>
+                        <p class="px-1 mt-4 mb-4 text-muted quote-text">
+                            {{user.company}}
+                        </p>
+                        <h5 class="mt-4 pt-3 h6 text-muted mb-0">Get Connected</h5>
+                        <div class="d-flex social-section justify-content-center">
+                            <a href={{user.blog}} target="_blank">
+                                <svg class="blog_icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    aria-hidden="true" focusable="false" width="0.88em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);"
+                                    preserveAspectRatio="xMidYMid meet" viewBox="0 0 448 512">
+                                    <path d="M446.6 222.7c-1.8-8-6.8-15.4-12.5-18.5c-1.8-1-13-2.2-25-2.7c-20.1-.9-22.3-1.3-28.7-5c-10.1-5.9-12.8-12.3-12.9-29.5c-.1-33-13.8-63.7-40.9-91.3c-19.3-19.7-40.9-33-65.5-40.5c-5.9-1.8-19.1-2.4-63.3-2.9c-69.4-.8-84.8.6-108.4 10C45.9 59.5 14.7 96.1 3.3 142.9C1.2 151.7.7 165.8.2 246.8c-.6 101.5.1 116.4 6.4 136.5c15.6 49.6 59.9 86.3 104.4 94.3c14.8 2.7 197.3 3.3 216 .8c32.5-4.4 58-17.5 81.9-41.9c17.3-17.7 28.1-36.8 35.2-62.1c4.9-17.6 4.5-142.8 2.5-151.7zm-322.1-63.6c7.8-7.9 10-8.2 58.8-8.2c43.9 0 45.4.1 51.8 3.4c9.3 4.7 13.4 11.3 13.4 21.9c0 9.5-3.8 16.2-12.3 21.6c-4.6 2.9-7.3 3.1-50.3 3.3c-26.5.2-47.7-.4-50.8-1.2c-16.6-4.7-22.8-28.5-10.6-40.8zm191.8 199.8l-14.9 2.4l-77.5.9c-68.1.8-87.3-.4-90.9-2c-7.1-3.1-13.8-11.7-14.9-19.4c-1.1-7.3 2.6-17.3 8.2-22.4c7.1-6.4 10.2-6.6 97.3-6.7c89.6-.1 89.1-.1 97.6 7.8c12.1 11.3 9.5 31.2-4.9 39.4z"
+                                        fill="#d6d6d6" />
+                                    <rect x="0" y="0" width="448" height="512" fill="rgba(0, 0, 0, 0)" /></svg>
+                            </a>
+                            <a href={{user.html_url}} target="_blank"><i class="fa fa fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container" *ngIf="isUserRepos == true">
+    <div class="row">
+        <main role="main" class="col-md-12 ml-sm-auto col-lg-12">
+            <h2>
+                <i class="fa fa-users"></i>
+                {{this.user_login_repos}} Repos
+            </h2>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover table-sm">
+                    <thead>
+                        <tr>
+                            <th>Profile</th>
+                            <th>Repos Name</th>
+                            <th>Created At</th>
+                            <th>Description</th>
+                            <th>Size</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="isDataLoaded == true">
+                        <tr *ngFor="let repos of userRepos | paginate: { itemsPerPage: this.per_page, currentPage: this.page }">
+                            <td class="py-1">
+                                <a [routerLink]="['/users',repos.owner.login]">
+                                    <img class="rounded" src="{{repos.owner.avatar_url}}" width="40" height="40">
+                                </a>
+                            </td>
+                            <td class="py-1">
+                                <a [href]="repos.html_url" target="_blank">
+                                    {{repos.name}}
+                                </a>
+                            </td>
+                            <td class="py-1"><small>{{repos.created_at | date}}</small></td>
+                            <td class="py-1"><small class="text-muted">{{repos.description}}</small></td>
+                            <td class="py-1">{{repos.size}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- <ul *ngFor="let user of users | paginate: { itemsPerPage: countOfPages, currentPage: currentPageNumber }"
+                        class="list-group">
+                        <li class="list-group-item disabled" aria-disabled="true">
+                            {{user.login}}
+                        </li>
+                    </ul> -->
+                <br>
+                <div *ngIf="isDataLoaded == true && this.page != null" class="text-right fixed-bottom container">
+                    <pagination-controls (pageChange)="this.page = $event"></pagination-controls>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>

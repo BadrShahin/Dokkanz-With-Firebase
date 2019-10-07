@@ -20,7 +20,7 @@ export class AuthService {
   }
 
   currentUser(){
-    console.log(this.angularFireAuth.auth.currentUser.uid);
+    return this.angularFireAuth.auth.currentUser;
   }
 
   logoutUser() {

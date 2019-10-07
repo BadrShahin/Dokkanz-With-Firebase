@@ -1,3 +1,5 @@
+import { UserData } from './SpecificUserData';
+
 export interface User {
     Username: string;
     Email: string;
@@ -5,4 +7,5 @@ export interface User {
     Gender: string;
     ProfileImage: string;
     BirthDate: string;
+    Favorites: [string];
 }

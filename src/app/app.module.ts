@@ -23,6 +23,7 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
 import { UsersComponent } from './components/users/users.component';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
+import { UserDetailsComponent } from './components/user-details/user-details.component';
 
 // const firebaseConfig = {
 //   apiKey: "AIzaSyCMX7H-6u0MXZOAdimSc77UNo6gu8AWceo",
@@ -53,7 +54,8 @@ const firebaseConfig = {
     RegisterComponent,
     NavbarComponent,
     UserProfileComponent,
-    UsersComponent
+    UsersComponent,
+    UserDetailsComponent
   ],
   imports: [
     BrowserModule,

@@ -13,12 +13,20 @@ import { catchError } from 'rxjs/operators';
 export class UsersComponent implements OnInit {
 
   users: UserLogin[];
-  
+
+
   // Pagination parameters.
   currentPageNumber: Number = 1;
-  countOfPages: Number;
   per_page: number;
   since: number;
+  isPaginated: boolean;
+  startFrom: number;
+
+  //search paramters
+  searchValue: string;
+  page: number;
+  hasValue: boolean;
+  searchedUsers: UserLogin[];
 
   constructor(
     private userService: UserService,
@@ -27,27 +35,62 @@ export class UsersComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.authService.getAuth());
+    // console.log(this.authService.getAuth());
     this.userService.getUsers("users").subscribe(response => {
       if (!response) {
         this.userService.handleError;
       }
       this.users = response as UserLogin[];
-      //console.log(this.per_page);
-      this.countOfPages = Math.ceil(this.users.length / 5);
+      // Set Pagination
+      this.setPagination();
+
+      this.searchMethod();
     },
       catchError(this.userService.handleError)
     );
   }
 
   setPagination() {
+    this.activatedRoute.queryParams.subscribe(params => {
 
-    // Get per_page parameter 
-    this.per_page = this.activatedRoute.snapshot.params['per_page'];
-    console.log(this.per_page);
-    // Get since parameter
-    this.since = this.activatedRoute.snapshot.params['since'];
+      // Get per_page parameter 
+      this.per_page = params['per_page'];
+      // Get since parameter
+      this.since = params['since'];
+      this.startFrom = this.users.findIndex(user => user.id == this.since);
+      this.startFrom = Math.ceil(this.startFrom / this.per_page) + 1;
 
+      if (this.per_page != null && this.since != null) {
+        this.isPaginated = true;
+      } else {
+        this.isPaginated = false;
+      }
+
+    });
   }
 
+  searchMethod() {
+    this.activatedRoute.queryParams.subscribe(params => {
+      // Get search value parameter 
+      this.searchValue = params['q'];
+      console.log(this.searchValue);
+      // Get per_page parameter 
+      this.per_page = params['per_page'];
+      // Get page parameter
+      this.page = params['page'];
+
+      // filter for specific users
+      if (this.searchValue != null && this.per_page != null && this.page != null) {
+        this.hasValue = true;
+        // for all matched values
+        this.searchedUsers = this.users.filter(user => user.login.includes(this.searchValue));
+        
+        //// for all users that start with search value 
+        // this.searchedUsers = this.users.filter(user => user.login.startsWith(this.searchValue));
+      } else {
+        this.hasValue = false;
+      }
+
+    });
+  }
 }
