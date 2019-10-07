@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="row">
+        <main role="main" class="col-md-12 ml-sm-auto col-lg-12">
+            <h4><i class="fa fa-users"></i> Favorites Users</h4>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover table-sm">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>ID</th>
+                            <th>Login</th>
+                            <th>Github</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="isDataLoaded == true">
+                        <tr *ngFor="let user of favoritesUsers">
+                            <td class="py-1"><img class="rounded" src="{{user.avatar_url}}" width="40" height="40"></td>
+                            <td class="py-1">{{user.id}}</td>
+                            <td class="py-1"><a [routerLink]="['/users', user.login]">{{user.login}}</a></td>
+                            <td class="py-1"><a [href]="user.html_url" target="_blank"><small class="text-muted">Go to
+                                        Github</small></a></td>
+                            <td class="py-1"><i class="fa fa-trash" (click)="deleteFavoritesUsers(user.login)"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+
+                <!--Including the pagination control.-->
+                <div *ngIf="isPaginated == true" class="text-right fixed-bottom container">
+                    <pagination-controls (pageChange)="currentPageNumber = $event"></pagination-controls>
+                </div>
+                <div *ngIf="hasValue == true" class="text-right fixed-bottom container">
+                    <pagination-controls (pageChange)="currentPageNumber = $event"></pagination-controls>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+

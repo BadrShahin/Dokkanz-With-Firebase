@@ -74,7 +74,7 @@ export class UserDetailsComponent implements OnInit {
   addToFavorites(user: string){
     this.getLoggedUser();
     document.getElementById('btnFavorite').style.color = 'orange';
-    this.loggedUser.Favorites.unshift(user);
+    this.loggedUser.Favorites.push(user);
     // console.log(this.loggedUser);
     this.tempLoggedUser = this.loggedUser;
     this.userService.updateUserProfile(this.tempLoggedUser.key, this.loggedUser);
