@@ -1,0 +1,113 @@
+<!-- <div [class.loader] = "!this.isDataLoaded"></div> -->
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="card py-3" *ngIf="this.isDataLoaded">
+            <!-- <img src={{loggedUser.ProfileImage}} class="card-img-top" alt="..."> -->
+            <img src="{{loggedUser.ProfileImage}}" class="mx-auto" width="250" height="250" style="border-radius: 50%"
+                alt="...">
+                <!-- https://lorempixel.com/250/250 -->
+            <div class="card-body text-center">
+                <h5 class="card-title">{{loggedUser.Username}}</h5>
+                <p class="card-text">Email: {{loggedUser.Email}}</p>
+                <p class="card-text">Gender: {{loggedUser.Gender}}</p>
+                <p class="card-text">Date of Birth: {{loggedUser.BirthDate}}</p>
+                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#editProfileModal">Edit
+                    Profile</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Edit</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="editProfileForm" *ngIf="this.isDataLoaded">
+
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input [class.is-invalid]="!editProfileForm.controls['Username'].valid && editProfileForm.controls['Username'].touched"
+                            type="text" formControlName="Username" id="username" class="form-control" [(ngModel)]="loggedUser.Username">
+                        <div class="invalid-feedback" *ngIf="!editProfileForm.controls['Username'].valid && editProfileForm.controls['Username'].dirty">
+                            <div *ngIf="editProfileForm.controls['Username'].hasError('required')">
+                                * required filed
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input [class.is-invalid]="!editProfileForm.controls['Email'].valid && editProfileForm.controls['Email'].touched"
+                            formControlName="Email" type="email" class="form-control" id="email" [(ngModel)]="loggedUser.Email"
+                            disabled>
+                    </div>
+
+                    
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input [class.is-invalid]="!editProfileForm.controls['Password'].valid && editProfileForm.controls['Password'].touched"
+                            type="password" class="form-control" id="password" formControlName="Password" [(ngModel)]="loggedUser.Password">
+                        <div class="invalid-feedback" *ngIf="!editProfileForm.controls['Password'].valid && editProfileForm.controls['Password'].dirty">
+                            <div *ngIf="editProfileForm.controls['Password'].hasError('required')">
+                                * required filed
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <label for="gender">Gender:</label>
+                    <div class="d-flex offset-1" style="margin-bottom: 8px;">
+                        <div class="custom-control custom-radio">
+                            <input id="male" type="radio" class="custom-control-input" value="male" name="Gender"
+                                [(ngModel)]="loggedUser.Gender" formControlName="Gender" [class.is-invalid]="!editProfileForm.controls['Gender'].valid && editProfileForm.controls['Gender'].touched">
+                            <label class="custom-control-label" for="male">Male</label>
+                        </div>
+
+                        <div class="custom-control custom-radio mx-3">
+                            <input id="female" type="radio" class="custom-control-input" value="female" name="Gender"
+                                [(ngModel)]="loggedUser.Gender" formControlName="Gender" [class.is-invalid]="!editProfileForm.controls['Gender'].valid && editProfileForm.controls['Gender'].touched">
+                            <label class="custom-control-label" for="female">Female</label>
+                        </div>
+                        <div class="invalid-feedback" *ngIf="!editProfileForm.controls['Gender'].valid && editProfileForm.controls['Gender'].dirty">
+                            <div *ngIf="editProfileForm.controls['Gender'].hasError('required')">
+                                * required filed
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <label for="profileImage">Choose Profile Image:</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="uploadProfileImage">Upload</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="profileImage" aria-describedby="uploadProfileImage"
+                                formControlName="ProfileImage" [value]="loggedUser.ProfileImage">
+                            <label class="custom-file-label" for="profileImage">Choose image</label>
+                        </div>
+                    </div>
+
+                    
+                    <mat-form-field class="d-block">
+                        <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="BirthDate"
+                            [(ngModel)]="loggedUser.BirthDate">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+
+                    <button type="submit" class="btn btn-success float-right" data-dismiss="modal" (click)="editProfile()" [disabled]="editProfileForm.valid == false">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,98 @@
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card-body" style="background-color: ghostwhite !important">
+                <img class="mx-auto d-block img-responsive" src="/assets/img/register.png" style="max-width: 100px; max-height: 100px;"
+                    alt="">
+                <h2 class="text-center">Register</h2>
+                <form [formGroup]="registerForm">
+                    <!-- Username -->
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input [class.is-invalid]="!registerForm.controls['Username'].valid && registerForm.controls['Username'].touched"
+                            type="text" formControlName="Username" id="username" class="form-control">
+                        <div class="invalid-feedback" *ngIf="!registerForm.controls['Username'].valid && registerForm.controls['Username'].dirty">
+                            <div *ngIf="registerForm.controls['Username'].hasError('required')">
+                                * required filed
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input [class.is-invalid]="!registerForm.controls['Email'].valid && registerForm.controls['Email'].touched"
+                            formControlName="Email" type="email" class="form-control" id="email">
+                        <div class="invalid-feedback" *ngIf="!registerForm.controls['Email'].valid && registerForm.controls['Email'].dirty">
+                            <div *ngIf="registerForm.controls['Email'].hasError('required')">
+                                * email is required
+                            </div>
+                            <div *ngIf="registerForm.controls['Email'].hasError('pattern')">
+                                * Email not valid
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Password -->
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input [class.is-invalid]="!registerForm.controls['Password'].valid && registerForm.controls['Password'].touched"
+                            type="password" class="form-control" id="password" formControlName="Password">
+                        <div class="invalid-feedback" *ngIf="!registerForm.controls['Password'].valid && registerForm.controls['Password'].dirty">
+                            <div *ngIf="registerForm.controls['Password'].hasError('required')">
+                                * required filed
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Gender -->
+                    <label for="gender">Gender:</label>
+                    <div class="d-flex offset-1" style="margin-bottom: 8px;">
+                        <div class="custom-control custom-radio">
+                            <input id="male" type="radio" class="custom-control-input" value="male" name="Gender"
+                                formControlName="Gender" [class.is-invalid]="!registerForm.controls['Gender'].valid && registerForm.controls['Gender'].touched">
+                            <label class="custom-control-label" for="male">Male</label>
+                        </div>
+
+                        <div class="custom-control custom-radio mx-3">
+                            <input id="female" type="radio" class="custom-control-input" value="female" name="Gender"
+                                formControlName="Gender" [class.is-invalid]="!registerForm.controls['Gender'].valid && registerForm.controls['Gender'].touched">
+                            <label class="custom-control-label" for="female">Female</label>
+                        </div>
+                    </div>
+
+                    <div class="invalid-feedback" *ngIf="!registerForm.controls['Gender'].valid && registerForm.controls['Gender'].dirty">
+                        <div *ngIf="registerForm.controls['Gender'].hasError('required')">
+                            * required filed
+                        </div>
+                    </div>
+
+                    <!-- Image -->
+                    <label for="profileImage">Choose Profile Image:</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="uploadProfileImage">Upload</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="profileImage" aria-describedby="uploadProfileImage"
+                                formControlName="ProfileImage">
+                            <label class="custom-file-label" for="profileImage">Choose image</label>
+                        </div>
+                    </div>
+
+                    <!-- Birth-Date -->
+                    <!-- <div class="form-group">
+                        <label for="birthdatepicker">Date of Birth:</label>
+                        <input [class.is-invalid]="!registerForm.controls['BirthDate'].valid && registerForm.controls['BirthDate'].touched"
+                            type="datetime" class="form-control" id="birthdatepicker" formControlName="BirthDate">
+                    </div> -->
+                    <mat-form-field class="d-block">
+                        <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="BirthDate">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+
+                    <button type="submit" class="btn btn-success btn-block" (click)="register()" [disabled]="registerForm.valid == false">Register</button>
+                    <a class="text-center d-block" [routerLink]="['/login']" title="login"><small>Sign in instead</small></a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
