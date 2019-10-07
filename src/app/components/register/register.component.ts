@@ -45,7 +45,6 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(["/"]);
 
         // Add User to Users Collection in Firebase
-        // Object.assign(this.user, );
         this.userService.addUser(JSON.parse(JSON.stringify(this.registerForm.value)));
         
       }).catch((err) => {

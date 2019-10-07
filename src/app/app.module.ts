@@ -25,6 +25,7 @@ import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { PerferedUsersComponent } from './components/perfered-users/perfered-users.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 // const firebaseConfig = {
 //   apiKey: "AIzaSyCMX7H-6u0MXZOAdimSc77UNo6gu8AWceo",
@@ -57,7 +58,8 @@ const firebaseConfig = {
     UserProfileComponent,
     UsersComponent,
     UserDetailsComponent,
-    PerferedUsersComponent
+    PerferedUsersComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

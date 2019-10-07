@@ -7,6 +7,7 @@ import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { PerferedUsersComponent } from './components/perfered-users/perfered-users.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 
 const routes: Routes = [
@@ -19,7 +20,9 @@ const routes: Routes = [
   { path: 'favorites', component: PerferedUsersComponent, canActivate: [AuthGuard] },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
-  { path: '', component: UsersComponent, canActivate: [AuthGuard] }
+  { path: '', component: UsersComponent, canActivate: [AuthGuard] },
+  { path: '**', component: NotFoundComponent }
+
 ];
 
 @NgModule({
