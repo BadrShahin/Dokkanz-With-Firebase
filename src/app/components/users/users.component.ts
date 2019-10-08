@@ -59,6 +59,7 @@ export class UsersComponent implements OnInit {
       this.since = params['since'];
       this.startFrom = this.users.findIndex(user => user.id == this.since);
       this.startFrom = Math.ceil(this.startFrom / this.per_page) + 1;
+      this.currentPageNumber = this.since;
 
       if (this.per_page != null && this.since != null) {
         this.isPaginated = true;
@@ -78,6 +79,7 @@ export class UsersComponent implements OnInit {
       this.per_page = params['per_page'];
       // Get page parameter
       this.page = params['page'];
+      this.currentPageNumber = this.page;
 
       // filter for specific users
       if (this.searchValue != null && this.per_page != null && this.page != null) {

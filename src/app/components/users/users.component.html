@@ -9,7 +9,7 @@
 
                     <a [routerLink]="'/favorites'"><i class="fa fa-star float-right px-1" style="font-size: 1.7rem; color: orange"
                             title="Go to favorites users"></i></a>
-                    <a [routerLink]="'/profile'"><i class="fa fa-user float-right px-1" style="font-size: 1.7rem;"
+                    <a [routerLink]="'/profile'"><i class="fa fa-user float-right px-1" style="font-size: 1.7rem;color: #0056b3;"
                             title="Go to your profile"></i></a>
                 </div>
             </div>
@@ -43,7 +43,7 @@
                         </tr>
                     </tbody>
                     <tbody *ngIf="hasValue == true">
-                        <tr *ngFor="let user of searchedUsers | paginate: { itemsPerPage: this.per_page, currentPage: this.page }">
+                        <tr *ngFor="let user of searchedUsers | paginate: { itemsPerPage: this.per_page, currentPage: currentPageNumber }">
                             <td class="py-1"><img class="rounded" src="{{user.avatar_url}}" width="40" height="40"></td>
                             <td class="py-1">{{user.id}}</td>
                             <td class="py-1"><a [routerLink]="['/users',user.login]">{{user.login}}</a></td>
@@ -56,7 +56,7 @@
 
                 <!--Including the pagination control.-->
                 <div *ngIf="isPaginated == true" class="text-right fixed-bottom container">
-                    <pagination-controls (pageChange)="currentPageNumber = $event"></pagination-controls>
+                    <pagination-controls (pageChange)="this.startFrom = $event"></pagination-controls>
                 </div>
                 <div *ngIf="hasValue == true" class="text-right fixed-bottom container">
                     <pagination-controls (pageChange)="currentPageNumber = $event"></pagination-controls>
